@@ -27,7 +27,7 @@ func main() {
 	corHandler := cors.New(cors.Options{
 		AllowedOrigins:   []string{env.AllowOrigin},
 		AllowedMethods:   []string{http.MethodGet, http.MethodPost, http.MethodPut},
-		AllowCredentials: true,
+		AllowCredentials: false,
 	})
 
 	handler := corHandler.Handler(mux)
