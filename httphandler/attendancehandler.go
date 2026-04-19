@@ -13,7 +13,26 @@ type AttendanceHandler struct {
 }
 
 func (h *AttendanceHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	if r.Method == http.MethodPost {
+	if r.Method == http.MethodGet {
+		attendances, err := sqldb.GetAllAttendance()
+
+		if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			w.Write([]byte("Internal Server Error"))
+			return
+		}
+
+		pbytes, err := json.Marshal(attendances)
+
+		if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			w.Write([]byte("Internal Server Error"))
+			return
+		}
+
+		w.Header().Set("Content-Type", "application/json")
+		w.Write(pbytes)
+	} else if r.Method == http.MethodPost {
 		decoder := json.NewDecoder(r.Body)
 		var attendance types.AttendanceCreate
 		err := decoder.Decode(&attendance)
