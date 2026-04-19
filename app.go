@@ -27,6 +27,7 @@ func main() {
 	corHandler := cors.New(cors.Options{
 		AllowedOrigins:   []string{env.AllowOrigin},
 		AllowedMethods:   []string{http.MethodGet, http.MethodPost, http.MethodPut},
+		AllowedHeaders:   []string{"Content-Type"},
 		AllowCredentials: false,
 	})
 
