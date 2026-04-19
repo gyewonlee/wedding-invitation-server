@@ -3,6 +3,8 @@ package sqldb
 import (
 	"fmt"
 	"time"
+
+	"github.com/juhonamnam/wedding-invitation-server/types"
 )
 
 func initializeAttendanceTable() error {
