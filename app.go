@@ -22,5 +22,16 @@ func main() {
 	mux.Handle("/api/guestbook", new(httphandler.GuestbookHandler))
 	mux.Handle("/api/attendance", new(httphandler.AttendanceHandler))
 
-	http.ListenAndServe(":8080", mux)
+	http.ListenAndServe(":8080", optionsHandler(mux))
+}
+
+func optionsHandler(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if r.Method == http.MethodOptions {
+			w.WriteHeader(http.StatusNoContent)
+			return
+		}
+		next.ServeHTTP(w, r)
+	})
+}
 }
